@@ -1,0 +1,31 @@
+# angular-view/Dockerfile
+
+# Stage 1: Build the Angular application with TailwindCSS using Node.js
+FROM node:18 AS build
+
+# Set the working directory
+WORKDIR /app
+
+# Copy package.json and package-lock.json to install dependencies
+COPY package*.json ./
+
+# Install dependencies including TailwindCSS, PostCSS, and Autoprefixer
+RUN npm install
+
+# Copy the rest of the application files
+COPY . .
+
+# Build the Angular application in production mode
+RUN npm run build --prod
+
+# Stage 2: Serve the Angular application with Nginx
+FROM nginx:alpine
+
+# Copy built Angular files from the first stage
+COPY --from=build /app/dist/angular-view /usr/share/nginx/html
+
+# Expose port 80 for Nginx
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
