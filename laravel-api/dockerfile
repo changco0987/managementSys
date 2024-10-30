@@ -1,5 +1,5 @@
 # Use the official PHP 8.2 image with Apache for Laravel API
-FROM php:8.2-apache
+FROM php:8.3-apache
 
 # Update and install only necessary dependencies
 RUN apt-get update && apt-get install -y \
