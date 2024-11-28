@@ -41,11 +41,14 @@ class UserController extends Controller
 
             DB::commit();
 
-            return response()->json([
-                'success' => true,
-                'message' => 'User created successfully',
-                'id' => $response,
-            ], 201);
+            // return response()->json([
+            //     'success' => true,
+            //     'message' => 'User created successfully',
+            //     'id' => $response,
+            // ], 201);
+
+
+            return $this->successResponse(['id'=>$response], 'User created successfully', 201);
         } catch (Exception $e) {
             // Rollback transaction
             DB::rollBack();
@@ -54,10 +57,29 @@ class UserController extends Controller
             Log::error('User creation failed', ['error' => $e->getMessage()]);
 
             // Respond with a generic error message
-            return response()->json([
-                'success' => false,
-                'message' => 'An error occurred while creating the user.',
-            ], 500);
+            return $this->errorResponse('An error occurred while creating the user.');
         }
+    }
+
+
+
+    public function show($id)
+    {
+        $user = User::findOrFail($id);
+        return $this->successResponse($user, 'User retrieved successfully');
+    }
+
+    public function update(StoreUserRequest $request, $id)
+    {
+        $user = User::findOrFail($id);
+        $user->update($request->validated());
+        return $this->successResponse($user, 'User updated successfully');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return $this->successResponse(null, 'User deleted successfully');
     }
 }
