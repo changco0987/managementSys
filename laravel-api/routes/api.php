@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::post('users', [UserController::class, 'store']); // No auth middleware
+Route::post('signup', [UserController::class, 'store']); // No auth middleware
 Route::post('login', [AuthController::class, 'login']); // No auth middleware
 
 
