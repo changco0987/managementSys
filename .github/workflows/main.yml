@@ -1,13 +1,13 @@
-
-name: Publish Docker image
+name: Publish Docker Images
 
 on:
   push:
-      branches: ['main']
+    branches: ['main']
 
 jobs:
-  push_to_registry:
-    name: Push Docker image to Docker Hub
+  # For creating angular image
+  push_angular_image:
+    name: Push Angular Docker Image
     runs-on: ubuntu-latest
     steps:
       - name: Check out the repo
@@ -16,20 +16,49 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{secrets.DOCKER_USERNAME}}
-          password: ${{secrets.DOCKER_PASSWORD}}
-      
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata for Angular image
+        id: angular-meta
         uses: docker/metadata-action@v5
         with:
-          images: changco0987/managementsys
+          images: changco0987/managementsys-angular-view
 
-      - name: Build and push Docker image
+      - name: Build and push Angular Docker image
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ./managementSys/angular-view
+          file: ./managementSys/angular-view/Dockerfile
           push: true
-          tags: ${{steps.meta.outputs.tags}}
-          labels: ${{steps.meta.outputs.labels}}
-      
+          tags: ${{ steps.angular-meta.outputs.tags }}
+          labels: ${{ steps.angular-meta.outputs.labels }}
+
+  # For creating laravel image
+  push_laravel_image:
+    name: Push Laravel Docker Image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Extract metadata for Laravel image
+        id: laravel-meta
+        uses: docker/metadata-action@v5
+        with:
+          images: changco0987/managementsys-laravel-api
+
+      - name: Build and push Laravel Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./managementSys/laravel-api
+          file: ./managementSys/laravel-api/Dockerfile
+          push: true
+          tags: ${{ steps.laravel-meta.outputs.tags }}
+          labels: ${{ steps.laravel-meta.outputs.labels }}
