@@ -1,0 +1,44 @@
+<?php
+
+namespace App\Http\Controllers\Auth;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+class AuthController extends Controller
+{
+    //
+
+
+
+    public function login(Request $request)
+    {
+        // Validate input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // Find user by email
+        $user = User::where('email', $request->email)->first();
+
+        // Check if user exists and verify password
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'message' => 'Invalid email or password.',
+            ], 401); // Unauthorized
+        }
+
+        // Generate access token (using Passport)
+        $token = $user->createToken('authToken')->accessToken;
+
+        
+        return response()->json([
+            'message' => 'Login successful.',
+            'user' => $user,
+            'token' => $token,
+        ]);
+    }
+}
