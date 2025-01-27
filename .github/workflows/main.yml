@@ -28,8 +28,8 @@ jobs:
       - name: Build and push Angular Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./managementSys/angular-view
-          file: ./managementSys/angular-view/Dockerfile
+          context: ./angular-view
+          file: ./angular-view/Dockerfile
           push: true
           tags: ${{ steps.angular-meta.outputs.tags }}
           labels: ${{ steps.angular-meta.outputs.labels }}
@@ -57,8 +57,8 @@ jobs:
       - name: Build and push Laravel Docker image
         uses: docker/build-push-action@v6
         with:
-          context: ./managementSys/laravel-api
-          file: ./managementSys/laravel-api/Dockerfile
+          context: ./laravel-api
+          file: ./laravel-api/Dockerfile
           push: true
           tags: ${{ steps.laravel-meta.outputs.tags }}
           labels: ${{ steps.laravel-meta.outputs.labels }}
