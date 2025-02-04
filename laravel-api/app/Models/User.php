@@ -49,4 +49,10 @@ class User extends Authenticatable
     {
         return User::insertGetId($data);
     }
+
+    public function retrieve_user($request)
+    {
+        // Find user by email
+        return User::where('email', $request->email)->first();
+    }
 }
