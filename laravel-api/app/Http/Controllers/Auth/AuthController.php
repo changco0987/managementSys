@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     //
+    private $user;
+
+    function __construct()
+    {
+        $this->user = new User;
+    }
 
 
 
@@ -22,23 +28,27 @@ class AuthController extends Controller
         ]);
 
         // Find user by email
-        $user = User::where('email', $request->email)->first();
+        $user = $this->user->retrieve_user($request);
 
         // Check if user exists and verify password
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            return response()->json([
-                'message' => 'Invalid email or password.',
-            ], 401); // Unauthorized
+        if (!$user || !Hash::check($request->password, $user->password)) 
+        {
+
+            return $this->errorResponse('Invalid email or password.');// Unauthorized
+            // return response()->json([
+            //     'message' => 'Invalid email or password.',
+            // ], 401); 
         }
 
         // Generate access token (using Passport)
         $token = $user->createToken('authToken')->accessToken;
 
-        
-        return response()->json([
-            'message' => 'Login successful.',
-            'user' => $user,
-            'token' => $token,
-        ]);
+        return $this->successResponse(['user' => $user, 'token'=>$token], 'Login successfully', 201);
+
+        // return response()->json([
+        //     'message' => 'Login successful.',
+        //     'user' => $user,
+        //     'token' => $token,
+        // ]);
     }
 }
