@@ -1,0 +1,44 @@
+# docker-compose.yml
+
+version: '3.8'
+
+services:
+  laravel-api:
+    build:
+      context: ./laravel-api
+      dockerfile: Dockerfile
+    container_name: laravel-api
+    ports:
+      - "8000:80"
+    environment:
+      - APP_ENV=local
+      - APP_DEBUG=true
+      - APP_KEY=base64:EQpqAjCXOy6X/Waa6MqtDbzRJMNNIBOYq/ETCI1Py0I=
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_DATABASE=laravel_db
+      - DB_USERNAME=laravel_user
+      - DB_PASSWORD=user_password
+    depends_on:
+      - mysql
+
+  angular-view:
+    build:
+      context: ./angular-view
+      dockerfile: Dockerfile
+    container_name: angular-view
+    ports:
+      - "4200:80" # Serves the Angular app on localhost:4200
+    depends_on:
+      - laravel-api
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: laravel_db
+      MYSQL_USER: laravel_user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "3306:3306"
