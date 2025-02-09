@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { RegistrationData } from '../models/registration-data';
 
 @Injectable({ providedIn: 'root' }) // This still works
 export class AuthService {
@@ -10,8 +11,18 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   /** Register User */
-  register(user: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.apiUrl}/register`, user);
+  register(user: RegistrationData): Observable<any> {
+    // Format data if needed (e.g., Date conversion)
+    const formattedUser = {
+      ...user
+    };
+
+    return this.http.post(`${this.apiUrl}/signup`, formattedUser).pipe(
+      catchError((error) => {
+        // Handle errors (e.g., show user-friendly messages)
+        return throwError((error));
+      })
+    );
   }
 
   /** Login User */

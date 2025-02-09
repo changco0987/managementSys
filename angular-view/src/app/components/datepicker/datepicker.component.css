@@ -1,0 +1,8 @@
+mat-form-field {
+    width: 100%;
+  }
+  
+  .mat-form-field-appearance-outline .mat-form-field-outline {
+    border-radius: 8px;
+  }
+  

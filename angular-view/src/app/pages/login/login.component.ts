@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
+
 export class LoginComponent {
   loginForm = new FormGroup({
     email: new FormControl<string>('', [Validators.required, Validators.email]),
@@ -32,6 +33,7 @@ export class LoginComponent {
       alert('Please fill in all required fields.');
       return;
     }
+    
    // Explicitly cast to expected type to avoid type issues
    const credentials = this.loginForm.getRawValue() as { email: string; password: string };
 
