@@ -1,11 +1,15 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LoadingComponent } from './components/loading/loading.component.spec';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterModule],
-  template: `<router-outlet></router-outlet>`,
+  imports: [RouterModule, LoadingComponent],
+  template: `
+    <app-loading></app-loading>
+    <router-outlet></router-outlet>
+    `,
 })
 export class AppComponent {}
 

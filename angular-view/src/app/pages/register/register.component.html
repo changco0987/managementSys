@@ -19,23 +19,64 @@
                 <div class="relative z-0 w-full mb-5 group">
                     <input formControlName="first_name" type="text" name="floating_first_name" id="floating_first_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                     <label for="floating_first_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">First name</label>
+                    <!-- Frontend validation error -->
+                    <div *ngIf="hasError('first_name')" class="text-red-500 text-sm mt-1">
+                        First name is required.
+                    </div>
+                        
+                    <!-- Display Laravel validation error -->
+                    <p *ngIf="serverErrors.first_name" class="text-red-500 text-sm mt-1">
+                        {{ serverErrors.first_name[0] }}
+                    </p>
                 </div>
                 <div class="relative z-0 w-full mb-5 group">
                     <input formControlName="last_name" type="text" name="floating_last_name" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                     <label for="floating_last_name" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Last name</label>
+                    <!-- Frontend validation error -->
+                    <div *ngIf="hasError('last_name')" class="text-red-500 text-sm mt-1">
+                        Last name is required.
+                    </div>
+                    <!-- Display Laravel validation error -->
+                    <p *ngIf="serverErrors.last_name" class="text-red-500 text-sm mt-1">
+                        {{ serverErrors.last_name[0] }}
+                    </p>
                 </div>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input formControlName="email" type="email" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                 <label for="floating_email" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
+                <!-- Frontend validation error -->
+                <div *ngIf="hasError('email')" class="text-red-500 text-sm mt-1">
+                    Email is required.
+                </div>
+                <!-- Display Laravel validation error -->
+                <p *ngIf="serverErrors.email" class="text-red-500 text-sm mt-1">
+                    {{ serverErrors.email[0] }}
+                </p>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input formControlName="password" type="password" name="floating_password" id="floating_password" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                 <label for="floating_password" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
+                <!-- Frontend validation error -->
+                <div *ngIf="hasError('password')" class="text-red-500 text-sm mt-1">
+                    Password is required.
+                </div>
+                <!-- Display Laravel validation error -->
+                <p *ngIf="serverErrors.password" class="text-red-500 text-sm mt-1">
+                    {{ serverErrors.password[0] }}
+                </p>
             </div>
             <div class="relative z-0 w-full mb-5 group">
                 <input formControlName="password_confirmation" type="password" name="floating_password_confirmation" id="floating_password_confirmation" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
                 <label for="floating_password_confirmation" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Confirm password</label>
+                <!-- Frontend validation error -->
+                <div *ngIf="hasError('password_confirmation')" class="text-red-500 text-sm mt-1">
+                    Password does not match.
+                </div>
+                <!-- Display Laravel validation error -->
+                <p *ngIf="serverErrors.password_confirmation" class="text-red-500 text-sm mt-1">
+                    {{ serverErrors.password_confirmation[0] }}
+                </p>
             </div>
             <div class="grid md:grid-cols-2 md:gap-6">
                 <div class="relative z-0 w-full mb-5 group flex flex-col">
@@ -59,11 +100,19 @@
                         xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
                     </svg>
+                    <!-- Frontend validation error -->
+                    <div *ngIf="hasError('gender')" class="text-red-500 text-sm mt-1">
+                        Gender is required.
+                    </div>
+                        
+                    <!-- Display Laravel validation error -->
+                    <p *ngIf="serverErrors.gender" class="text-red-500 text-sm mt-1">
+                        {{ serverErrors.gender[0] }}
+                    </p>
                 </div>
                 <div class="relative z-0 w-full mb-5 group flex flex-col">
+
                     <!-- Use the standalone datepicker -->
-                                                
-                    
                     <label for="floating_select"
                         class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 
                         transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 
@@ -75,7 +124,15 @@
                         class="w-full border border-gray-300 rounded-lg p-2 text-gray-700 shadow-sm 
                         focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     </app-datepicker>
-                   
+                    <!-- Frontend validation error -->
+                    <div *ngIf="hasError('birthday')" class="text-red-500 text-sm mt-1">
+                        Birthday is required.
+                    </div>
+                        
+                    <!-- Display Laravel validation error -->
+                    <p *ngIf="serverErrors.birthday" class="text-red-500 text-sm mt-1">
+                        {{ serverErrors.birthday[0] }}
+                    </p>
 
                 </div>
             </div>
