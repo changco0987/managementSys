@@ -94,6 +94,13 @@ export class RegisterComponent {
       panelClass: ['success-snackbar']
     });
   }
+
+
+  hasError(controlName: string) {
+    return this.registerForm.controls[controlName].invalid && this.registerForm.controls[controlName].touched;
+  }
+
+
 }
 
 
