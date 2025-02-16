@@ -1,0 +1,14 @@
+.error-snackbar {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  .success-snackbar {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  input.ng-invalid.ng-touched {
+    border: 1px solid red;
+  }
+  
