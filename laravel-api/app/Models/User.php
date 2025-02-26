@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasRoles, HasFactory;
+
+    public $timestamps = true; // Ensures timestamps are handled automatically
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +20,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'gender',
+        'birthday',
         'email',
         'password',
     ];
@@ -47,7 +54,8 @@ class User extends Authenticatable
 
     public function create_user($data)
     {
-        return User::insertGetId($data);
+        $user = User::create($data);
+        return $user->id;
     }
 
     public function retrieve_user($request)
@@ -55,4 +63,5 @@ class User extends Authenticatable
         // Find user by email
         return User::where('email', $request->email)->first();
     }
+
 }
