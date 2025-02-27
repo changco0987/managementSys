@@ -51,6 +51,34 @@ class User extends Authenticatable
         ];
     }
 
+    
+    /**
+     * Mutator for first_name
+     * it capitalize the first letter
+     * 
+     * Summary of setFirstNameAttribute
+     * @param mixed $value
+     * @return void
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucfirst(strtolower($value));
+    }
+
+
+    /**
+     * Mutator for last_name
+     * it capitalize the first letter
+     * 
+     * Summary of setLastNameAttribute
+     * @param mixed $value
+     * @return void
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucfirst(strtolower($value));
+    }
+
 
     public function create_user($data)
     {
