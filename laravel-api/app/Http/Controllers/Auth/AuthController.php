@@ -30,6 +30,8 @@ class AuthController extends Controller
         // Find user by email
         $user = $this->user->retrieve_user($request);
 
+        $userData = clone $user;//Create a user object clone
+
         // Check if user exists and verify password
         if (!$user || !Hash::check($request->password, $user->password)) 
         {
@@ -43,7 +45,22 @@ class AuthController extends Controller
         // Generate access token (using Passport)
         $token = $user->createToken('authToken')->accessToken;
 
-        return $this->successResponse(['user' => $user, 'token'=>$token], 'Login successfully', 201);
+        // Retrieve user roles & permissions
+        $roles = $user->getRoleNames(); // e.g., ['admin']
+        $permissions = $user->getAllPermissions()->pluck('name'); // e.g., ['edit articles', 'delete articles']
+
+
+        return $this->successResponse(
+          [
+                    'user' => collect($userData)
+                              ->merge(['roles' => $roles])
+                              ->merge(['permissions' =>$permissions])
+                              ->all(), 
+                    'token' => $token,
+                    
+                ], 
+                'Login successfully', 201
+            );
 
         // return response()->json([
         //     'message' => 'Login successful.',

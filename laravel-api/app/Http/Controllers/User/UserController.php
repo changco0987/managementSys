@@ -40,9 +40,11 @@ class UserController extends Controller
         try 
         {
             $response = $this->user->create_user($data);
+            $response->assignRole('user');//Assign initial role
+
             DB::commit();
     
-            return $this->successResponse(['id' => $response], 'User created successfully', 201);
+            return $this->successResponse(['id' => $response->id], 'User created successfully', 201);
         } 
         catch (Exception $e)
         {

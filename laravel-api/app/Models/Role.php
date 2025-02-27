@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Models;
-
+use Spatie\Permission\Models\Role as SpatieRole;
 use Illuminate\Database\Eloquent\Model;
 
-class Role extends Model
+class Role extends SpatieRole
 {
     //Model config
     protected $table = 'roles';//To prevent laravel from adding 's' in table name

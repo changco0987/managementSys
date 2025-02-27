@@ -2,13 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, Notifiable;
+    use HasApiTokens, Notifiable, HasRoles, HasFactory;
+
+    public $timestamps = true; // Ensures timestamps are handled automatically
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +20,10 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'gender',
+        'birthday',
         'email',
         'password',
     ];
@@ -44,10 +51,38 @@ class User extends Authenticatable
         ];
     }
 
+    
+    /**
+     * Mutator for first_name
+     * it capitalize the first letter
+     * 
+     * Summary of setFirstNameAttribute
+     * @param mixed $value
+     * @return void
+     */
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['first_name'] = ucfirst(strtolower($value));
+    }
+
+
+    /**
+     * Mutator for last_name
+     * it capitalize the first letter
+     * 
+     * Summary of setLastNameAttribute
+     * @param mixed $value
+     * @return void
+     */
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['last_name'] = ucfirst(strtolower($value));
+    }
+
 
     public function create_user($data)
     {
-        return User::insertGetId($data);
+        return User::create($data);
     }
 
     public function retrieve_user($request)
@@ -55,4 +90,5 @@ class User extends Authenticatable
         // Find user by email
         return User::where('email', $request->email)->first();
     }
+
 }
