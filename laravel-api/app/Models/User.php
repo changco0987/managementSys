@@ -54,8 +54,7 @@ class User extends Authenticatable
 
     public function create_user($data)
     {
-        $user = User::create($data);
-        return $user->id;
+        return User::create($data);
     }
 
     public function retrieve_user($request)
