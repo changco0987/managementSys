@@ -29,10 +29,10 @@ export class AuthService {
   login(user: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, user).pipe(
       tap((response: any) => {
-        if (response.token) 
+
+        if (response.data.token) 
         {
-          localStorage.setItem('auth_token', response.token);
-          console.log(response.token);
+          localStorage.setItem('authToken', response.data.token);
         }
         
       })
@@ -41,11 +41,13 @@ export class AuthService {
 
   /** Logout */
   logout() {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('authToken');
   }
 
   /** Check if user is authenticated */
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('auth_token');
+    return !!localStorage.getItem('authToken');
   }
+
+
 }

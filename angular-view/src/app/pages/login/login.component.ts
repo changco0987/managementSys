@@ -40,9 +40,9 @@ export class LoginComponent {
     this.authService.login(credentials).subscribe({
       next: (response) => {
         console.log('Login successful:', response);
-        if (response.token) 
+        if (response.data.token) 
         {
-          this.router.navigate(['/dashboard']);
+          this.router.navigate(['home']);
         }
       },
       error: (error) => {
