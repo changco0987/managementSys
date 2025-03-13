@@ -7,11 +7,13 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { loadingInterceptor } from './app/interceptors/loading/loading.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { authInterceptor } from './app/interceptors/auth/auth.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes), 
     provideHttpClient(withInterceptors([loadingInterceptor, authInterceptor])), 
     provideAnimationsAsync(),
+    CookieService
   ],
 }).catch((err) => console.error(err));
