@@ -3,12 +3,16 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, throwError } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { RegistrationData } from '../models/registration-data';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({ providedIn: 'root' }) // This still works
 export class AuthService {
   private apiUrl = 'http://127.0.0.1:8000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cookieService: CookieService
+  ) {}
 
   /** Register User */
   register(user: RegistrationData): Observable<any> {
@@ -32,7 +36,7 @@ export class AuthService {
 
         if (response.data.token) 
         {
-          localStorage.setItem('authToken', response.data.token);
+          this.cookieService.set('authToken', response.data.token, { expires: 7, path: '/' });
         }
         
       })
@@ -41,12 +45,14 @@ export class AuthService {
 
   /** Logout */
   logout() {
-    localStorage.removeItem('authToken');
+    this.cookieService.delete('authToken');
+
   }
 
   /** Check if user is authenticated */
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('authToken');
+    console.log(this.cookieService.get('authToken'));
+    return !!this.cookieService.get('authToken');
   }
 
 
