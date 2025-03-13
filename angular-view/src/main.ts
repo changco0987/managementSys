@@ -4,13 +4,16 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { routes } from './app/app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { loadingInterceptor } from './app/interceptor/loading/loading.interceptor';
+import { loadingInterceptor } from './app/interceptors/loading/loading.interceptor';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { authInterceptor } from './app/interceptors/auth/auth.interceptor';
+import { CookieService } from 'ngx-cookie-service';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes), 
-    provideHttpClient(withInterceptors([loadingInterceptor])), 
+    provideHttpClient(withInterceptors([loadingInterceptor, authInterceptor])), 
     provideAnimationsAsync(),
+    CookieService
   ],
 }).catch((err) => console.error(err));
